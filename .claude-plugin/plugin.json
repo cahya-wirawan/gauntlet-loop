@@ -1,0 +1,16 @@
+{
+  "name": "gauntlet-loop",
+  "description": "Adversarial multi-agent Gauntlet Loop for Claude Code with independent native subagents, deterministic verification, iterative revision, and optional cross-provider judging through OpenAI, Gemini, Anthropic API, or Ollama.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Gauntlet Loop"
+  },
+  "keywords": [
+    "multi-agent",
+    "verification",
+    "red-team",
+    "code-review",
+    "multi-provider",
+    "gauntlet"
+  ]
+}

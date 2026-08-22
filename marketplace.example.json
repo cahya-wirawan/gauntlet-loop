@@ -1,0 +1,16 @@
+{
+  "name": "gauntlet-tools",
+  "owner": {
+    "name": "Your Organization"
+  },
+  "plugins": [
+    {
+      "name": "gauntlet-loop",
+      "description": "Multi-provider adversarial Gauntlet Loop for Claude Code",
+      "source": {
+        "source": "github",
+        "repo": "YOUR_ORG/YOUR_REPO"
+      }
+    }
+  ]
+}
