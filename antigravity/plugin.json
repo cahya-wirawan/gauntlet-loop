@@ -1,0 +1,5 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "gauntlet-loop",
+  "description": "Multi-provider adversarial Gauntlet Loop for Google Antigravity: native parallel subagents, deterministic verification, iterative revision, and optional OpenAI/Anthropic/Gemini/Ollama independent reviewers."
+}

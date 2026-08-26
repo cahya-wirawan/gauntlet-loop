@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "gauntlet-router": {
+      "command": "python3",
+      "args": ["__GAUNTLET_MCP_SERVER__"]
+    }
+  }
+}
