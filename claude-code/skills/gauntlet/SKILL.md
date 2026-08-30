@@ -351,6 +351,18 @@ Safe parallelism is primarily:
 
 Builder and Reviser run serially.
 
+**Red-team and verifier are not safe to parallelize with each other**, despite both
+having `disallowedTools: Write, Edit`. Bash is still permitted for both, and a
+thorough red-team pass will often temporarily mutate a product file to prove a
+regression test actually fails (revert a fix via a `cp`-based backup, run the
+test, confirm red, restore, confirm byte-identical) before reporting a finding.
+If a verifier is running Bash checks (builds, tests) against the same worktree
+at that moment, it can observe the tree changing mid-run from a process outside
+its own control, misattribute the change, and waste turns diagnosing something
+that was never wrong. Run critic and red-team together (both are read-mostly or
+self-restoring), then run verifier by itself afterward, once red-team has
+reported and any temporary mutation is confirmed restored.
+
 ## Final response
 
 Return a concise Gauntlet report:
