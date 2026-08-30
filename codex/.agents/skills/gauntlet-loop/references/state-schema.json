@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GauntletState",
+  "type": "object",
+  "required": [
+    "task",
+    "iteration",
+    "max_iterations",
+    "minimum_judge_score",
+    "history"
+  ],
+  "properties": {
+    "task": {
+      "type": "string"
+    },
+    "iteration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_iterations": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "minimum_judge_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "verdict": {
+      "enum": [
+        "RUNNING",
+        "PASS",
+        "REVISE",
+        "FAIL",
+        "BEST_EFFORT"
+      ]
+    }
+  },
+  "additionalProperties": true
+}
