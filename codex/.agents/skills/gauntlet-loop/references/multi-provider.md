@@ -16,6 +16,10 @@ export GAUNTLET_OPENAI_MODEL=gpt-5.6
 ```bash
 export ANTHROPIC_API_KEY=...
 export GAUNTLET_ANTHROPIC_MODEL=claude-sonnet-5
+
+# Optional: gateway/proxy instead of api.anthropic.com. The host, /v1, or the
+# full /v1/messages path all work -- the router appends whatever is missing.
+export ANTHROPIC_BASE_URL=https://api.anthropic.com
 ```
 
 ## Gemini

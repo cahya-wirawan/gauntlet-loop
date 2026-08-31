@@ -90,6 +90,7 @@ def provider_status() -> dict[str, Any]:
             "configured": bool(os.getenv("ANTHROPIC_API_KEY")),
             "model": DEFAULT_MODELS["anthropic"],
             "key_env": "ANTHROPIC_API_KEY",
+            "base_url": anthropic_url(),
         },
         "ollama": {
             "configured": bool(os.getenv("OLLAMA_BASE_URL")) or bool(os.getenv("GAUNTLET_OLLAMA_MODEL")),
@@ -152,12 +153,21 @@ def ask_gemini(system: str, prompt: str, model: str, timeout: int) -> str:
     return "\n".join(parts) or json.dumps(obj)
 
 
+def anthropic_url() -> str:
+    base = os.getenv("ANTHROPIC_BASE_URL", "https://api.anthropic.com").rstrip("/")
+    if base.endswith("/messages"):
+        return base
+    if base.endswith("/v1"):
+        return f"{base}/messages"
+    return f"{base}/v1/messages"
+
+
 def ask_anthropic(system: str, prompt: str, model: str, timeout: int) -> str:
     key = os.environ.get("ANTHROPIC_API_KEY")
     if not key:
         raise RuntimeError("ANTHROPIC_API_KEY is not set")
     obj = http_json(
-        "https://api.anthropic.com/v1/messages",
+        anthropic_url(),
         {
             "x-api-key": key,
             "anthropic-version": "2023-06-01",

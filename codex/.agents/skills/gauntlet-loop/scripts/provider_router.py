@@ -8,6 +8,12 @@ OpenAI configuration:
 
 The base URL must not include /responses or /chat/completions; the router appends
 that endpoint automatically.
+
+Anthropic configuration:
+  ANTHROPIC_BASE_URL=https://api.anthropic.com
+
+The base URL may end at the host, at /v1, or at the full /v1/messages path; the
+router appends whatever is missing.
 """
 from __future__ import annotations
 import argparse, json, os, sys, urllib.request, urllib.error
@@ -89,11 +95,20 @@ def ask_openai(system, prompt):
     return extract_chat_text(obj)
 
 
+def anthropic_url():
+    base = os.getenv("ANTHROPIC_BASE_URL", "https://api.anthropic.com").rstrip("/")
+    if base.endswith("/messages"):
+        return base
+    if base.endswith("/v1"):
+        return f"{base}/messages"
+    return f"{base}/v1/messages"
+
+
 def ask_anthropic(system, prompt):
     key = os.environ["ANTHROPIC_API_KEY"]
     model = os.getenv("GAUNTLET_ANTHROPIC_MODEL", "claude-sonnet-5")
     obj = post_json(
-        "https://api.anthropic.com/v1/messages",
+        anthropic_url(),
         {"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"},
         {"model": model, "max_tokens": 4096, "system": system,
          "messages": [{"role": "user", "content": prompt}]},
@@ -159,6 +174,13 @@ def get_status():
                 "configured": bool(os.getenv("OLLAMA_BASE_URL")) or bool(os.getenv("GAUNTLET_OLLAMA_MODEL")),
                 "base_url": os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
                 "model": os.getenv("GAUNTLET_OLLAMA_MODEL", "qwen3:32b"),
+            }
+        elif name == "anthropic":
+            result[name] = {
+                "configured": bool(os.getenv(env_name)),
+                "env": env_name,
+                "model": os.getenv("GAUNTLET_ANTHROPIC_MODEL", "claude-sonnet-5"),
+                "base_url": anthropic_url(),
             }
         else:
             result[name] = {"configured": bool(os.getenv(env_name)), "env": env_name}

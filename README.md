@@ -149,7 +149,9 @@ export OPENAI_API_KEY="sk-..."
 export ANTHROPIC_API_KEY="sk-ant-..."
 export GEMINI_API_KEY="AIza..."
 
-# Local Ollama Endpoint (Optional)
+# Optional Base URL Overrides (gateways / proxies / local endpoints)
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+export ANTHROPIC_BASE_URL="https://api.anthropic.com"
 export OLLAMA_BASE_URL="http://localhost:11434"
 export GAUNTLET_OLLAMA_MODEL="qwen3:32b"
 

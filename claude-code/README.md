@@ -87,6 +87,13 @@ export OLLAMA_BASE_URL="http://localhost:11434"
 export GAUNTLET_OLLAMA_MODEL="qwen3:32b"
 ```
 
+Optional base-URL overrides for gateways/proxies:
+
+```bash
+export OPENAI_BASE_URL="https://api.openai.com/v1"
+export ANTHROPIC_BASE_URL="https://api.anthropic.com"
+```
+
 Optional model overrides:
 
 ```bash
